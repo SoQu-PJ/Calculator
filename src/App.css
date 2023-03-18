@@ -1,0 +1,121 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+/* variable  */
+:root {
+    --bg-cal-color: rgb(0, 0, 0, 0.5);
+
+    /* buttons */
+    --bg-clear-color: rgb(255, 0, 0);
+    --bg-equals-color: rgb(0, 0, 255, 0.6);
+    --bg-arithmetic-signs-color: rgb(190, 190, 190, 0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #FF3CAC;
+    background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+}
+
+.calculator {
+    font-family: 'Russo One', sans-serif;
+    display: grid;
+    grid-template: 20% 1fr / 1fr;
+    background: var(--bg-cal-color);
+    width: 90vw;
+    height: 90vh;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.display {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    grid-column: 1 / span 1;
+    background-color: white;
+    margin: 0.5rem;
+    font-size: 5rem;
+    border-radius: 1rem;
+    padding: 0 1rem;
+}
+
+.buttons {
+    display: grid;
+    grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+    border-radius: 1rem;
+}
+
+.buttons button {
+    font-family: 'Russo One', sans-serif;
+    border: none;
+    margin: 0.4rem;
+    border-radius: 2rem;
+    font-size: 2rem;
+    transition: 0.3s;
+}
+
+.buttons button:hover {
+    font-size: 4rem;
+}
+
+.buttons button:active {
+    background-color: #FF3CAC !important;
+}
+
+/* buttons start */
+#clear {
+    background-color: var(--bg-clear-color);
+    grid-column: 1 / span 2;
+}
+
+#subtract,
+#add {
+    grid-column: 4 / span 1;
+}
+
+.arithmetic-signs {
+    background-color: var(--bg-arithmetic-signs-color);
+}
+
+
+#zero {
+    grid-column: 1 / span 2;
+}
+
+#nine,
+#eight,
+#seven {
+    grid-row: 2 / span 1;
+}
+
+#six,
+#five,
+#four {
+    grid-row: 3 / span 1;
+}
+
+
+#equals {
+    background-color: var(--bg-equals-color);
+    grid-column: 4 / span 1;
+    grid-row: 4 / span 2;
+}
+
+/* buttons end */
+
+/* responsive web design */
+
+@media (min-width: 1025px) {
+    .calculator {
+        width: 70vh;
+    }
+}
