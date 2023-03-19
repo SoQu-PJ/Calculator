@@ -31,7 +31,7 @@ body {
     grid-template: 20% 1fr / 1fr;
     background: var(--bg-cal-color);
     width: 90vw;
-    height: 90vh;
+    height: 80vh;
     border-radius: 1rem;
     padding: 1rem;
 }
