@@ -5,6 +5,8 @@
 :root {
     --bg-cal-color: rgb(0, 0, 0, 0.5);
 
+    --small-numbers-color: rgb(140, 140, 140);
+
     /* buttons */
     --bg-clear-color: rgb(255, 0, 0);
     --bg-equals-color: rgb(0, 0, 255, 0.6);
@@ -28,7 +30,7 @@ body {
 .calculator {
     font-family: 'Russo One', sans-serif;
     display: grid;
-    grid-template: 20% 1fr / 1fr;
+    grid-template: 21% 1fr / 1fr;
     background: var(--bg-cal-color);
     width: 90vw;
     height: 80vh;
@@ -38,14 +40,20 @@ body {
 
 .display {
     display: flex;
-    justify-content: end;
-    align-items: center;
+    justify-content: space-between;
+    align-items: end;
+    flex-flow: column;
     grid-column: 1 / span 1;
     background-color: white;
     margin: 0.5rem;
     font-size: 5rem;
     border-radius: 1rem;
     padding: 0 1rem;
+}
+
+.display .smallNumbers {
+    font-size: 3rem;
+    color: var(--small-numbers-color);
 }
 
 .buttons {

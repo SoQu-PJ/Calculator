@@ -2,35 +2,48 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [displayValue, setDisplayValue] = useState(["0"]);
-  const [firstNumber, setFirstNumber] = useState("");
-  const [secondNumber, setSecondNumber] = useState("");
+  const [displayValue, setDisplayValue] = useState(['0']);
+  const [arithmeticSigns, setArithmeticSigns] = useState({signs: '', use: false})
+  const [firstNumber, setFirstNumber] = useState(['0']);
+  const [secondNumber, setSecondNumber] = useState(['0']);
+
+  const clearHandler = () =>{
+    setDisplayValue(['0']);
+    setFirstNumber(['0']);
+    setSecondNumber(['0']);
+    setArithmeticSigns({signs: '', use: false});
+  }
 
   const setEquation = e =>{
-    setDisplayValue();
+    !arithmeticSigns.use ? setFirstNumber(prev => [...prev, e.target.textContent]) : setSecondNumber(prev => [...prev, e.target.textContent]);
+    setDisplayValue(prev => [...prev, e.target.textContent]);
   } 
-
+  
   useEffect(()=>{
     const displayButton = document.querySelectorAll(".display-button");
     
-
+    
     displayButton.forEach(el => {
       el.addEventListener("click", setEquation);
-      return () => el.removeEventListener("click", setEquation);
+      
+      return ()=> el.removeEventListener("click", setEquation)
     });
+  }, []);
 
-  });
 
   return (
     <main className='calculator'>
-      <section id='display' className='display'>{displayValue}</section>
+      <section id='display' className='display'>
+        <p className='smallNumbers'>{displayValue.join("").replace(/^0+/,"")}</p>
+        <p className='selectNumber'>{!arithmeticSigns.use ? parseFloat(firstNumber.join("")) : parseFloat(secondNumber.join(""))}</p>
+      </section>
       <section className='buttons'>
-        <button id='clear' onClick={() => setDisplayValue(["0"])}>AC</button>
+        <button id='clear' onClick={clearHandler}>AC</button>
 
-        <button id='divide' className='display-button arithmetic-signs'>/</button>
-        <button id='multiply' className='display-button arithmetic-signs'>X</button>
-        <button id='subtract' className='display-button arithmetic-signs'>-</button>
-        <button id='add' className='display-button arithmetic-signs'>+</button>
+        <button id='divide' className='display-button arithmetic-signs' onClick={() => setArithmeticSigns({signs: "/", use: true})}>/</button>
+        <button id='multiply' className='display-button arithmetic-signs' onClick={() => setArithmeticSigns({signs: "*", use: true})}>X</button>
+        <button id='subtract' className='display-button arithmetic-signs' onClick={() => setArithmeticSigns({signs: "-", use: true})}>-</button>
+        <button id='add' className='display-button arithmetic-signs' onClick={() => setArithmeticSigns({signs: "+", use: true})}>+</button>
         
         <button id='nine' className='display-button number'>9</button>
         <button id='eight' className='display-button number'>8</button>
