@@ -33,7 +33,7 @@ body {
     grid-template: 21% 1fr / 1fr;
     background: var(--bg-cal-color);
     width: 90vw;
-    height: 80vh;
+    height: 85vh;
     border-radius: 1rem;
     padding: 1rem;
 }
@@ -46,13 +46,14 @@ body {
     grid-column: 1 / span 1;
     background-color: white;
     margin: 0.5rem;
-    font-size: 5rem;
+    font-size: 3rem;
     border-radius: 1rem;
     padding: 0 1rem;
+
 }
 
 .display .smallNumbers {
-    font-size: 3rem;
+    font-size: 2rem;
     color: var(--small-numbers-color);
 }
 
@@ -125,5 +126,13 @@ body {
 @media (min-width: 1025px) {
     .calculator {
         width: 70vh;
+    }
+
+    .display {
+        font-size: 5rem;
+    }
+
+    .display .smallNumbers {
+        font-size: 3rem;
     }
 }

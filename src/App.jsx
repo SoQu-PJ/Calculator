@@ -21,12 +21,27 @@ function App() {
   } 
 
   const setArithmeticSignsHandler = e => {
-    setDisplayValue(prev => [...prev, arithmeticSigns]); 
+    setDisplayValue(prev => [...prev, e.target.dataset.sign]); 
     setArithmeticSigns(e.target.dataset.sign);
   }
 
   const equalsHandler = () => {
-    
+    let result;
+
+    if(arithmeticSigns === '/')
+      result = (parseFloat(firstNumber.join("")) / parseFloat(secondNumber.join(""))).toFixed(9);
+    else if(arithmeticSigns === '*')
+      result = (parseFloat(firstNumber.join("")) * parseFloat(secondNumber.join(""))).toFixed(9);
+    else if(arithmeticSigns === '-')
+      result = (parseFloat(firstNumber.join("")) - parseFloat(secondNumber.join(""))).toFixed(9);
+    else if(arithmeticSigns === '+')
+      result = (parseFloat(firstNumber.join("")) + parseFloat(secondNumber.join(""))).toFixed(9);
+    else 
+      result = firstNumber;
+
+    setFirstNumber([result]);
+    setSecondNumber(['0']);
+    setArithmeticSigns('');
   }
 
   useEffect(()=>{
