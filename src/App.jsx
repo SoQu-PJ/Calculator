@@ -1,58 +1,74 @@
 import { useState, useEffect } from 'react'
+import Calc from './assets/Calculator';
 import './App.css'
 
 function App() {
-  const [displayValue, setDisplayValue] = useState(['0']);
+  const [history, setHistory] = useState(['0']);
+  const [numbers, setNumbers] = useState(['0']);
   const [arithmeticSigns, setArithmeticSigns] = useState('')
-  const [firstNumber, setFirstNumber] = useState(['0']);
-  const [secondNumber, setSecondNumber] = useState(['0']);
-
-  const clearHandler = () =>{
-    setDisplayValue(['0']);
-    setFirstNumber(['0']);
-    setSecondNumber(['0']);
-    setArithmeticSigns('');
-  }
-
-  const setEquationHandler = e => {
-    setDisplayValue(prev => [...prev, e.target.textContent]);
-    arithmeticSigns === '' ? setFirstNumber(prev => [...prev, e.target.textContent]) : setSecondNumber(prev => [...prev, e.target.textContent]);
+  const [firstNumber, setFirstNumber] = useState({number: '', use: true});
+  const [secondNumber, setSecondNumber] = useState({number: '', use: false, firstVis: true});
     
-  } 
-
-  const setArithmeticSignsHandler = e => {
-    setDisplayValue(prev => [...prev, e.target.dataset.sign]); 
-    setArithmeticSigns(e.target.dataset.sign);
-  }
-
-  const equalsHandler = () => {
-    let result;
-
-    if(arithmeticSigns === '/')
-      result = (parseFloat(firstNumber.join("")) / parseFloat(secondNumber.join(""))).toFixed(9);
-    else if(arithmeticSigns === '*')
-      result = (parseFloat(firstNumber.join("")) * parseFloat(secondNumber.join(""))).toFixed(9);
-    else if(arithmeticSigns === '-')
-      result = (parseFloat(firstNumber.join("")) - parseFloat(secondNumber.join(""))).toFixed(9);
-    else if(arithmeticSigns === '+')
-      result = (parseFloat(firstNumber.join("")) + parseFloat(secondNumber.join(""))).toFixed(9);
-    else 
-      result = firstNumber;
-
-    setFirstNumber([result]);
-    setSecondNumber(['0']);
+  // console.log(firstNumber, secondNumber, arithmeticSigns);
+  
+  const clearHandler = () =>{
+    setHistory(['0']);
+    setNumbers(['0']);
+    setFirstNumber({number: '', use: true});
+    setSecondNumber({number: '', firstVis: true});
     setArithmeticSigns('');
+  }
+  
+  const setEquationHandler = e => {
+    const textContent = e.target.textContent;
+    
+    firstNumber.use ? setFirstNumber({number: firstNumber.number + textContent, use: true}) : 
+                      setSecondNumber(prev => ({...prev, number: secondNumber.number + textContent, use: true}));
+    
+    setNumbers(prev => [...prev, textContent]);
+
+  } 
+  
+  const setArithmeticSignsHandler = e => {
+      setFirstNumber(prev => ({...prev, use: false}));
+    
+      if(arithmeticSigns !== '' && secondNumber.use)
+      equalsHandler();
+      
+      // firstNumber.use = false;
+      setNumbers(['0']);
+      
+      setArithmeticSigns(e.target.dataset.sign);
+  }
+  
+  const equalsHandler = () => {
+    secondNumber.firstVis ? setHistory(prev => [...prev, firstNumber.number, arithmeticSigns, secondNumber.number]) :
+                            setHistory(prev => [...prev, arithmeticSigns, secondNumber.number]);
+    setFirstNumber({number: '', use: true});
+    setSecondNumber({number: '', use: false, firstVis: false});
+    setArithmeticSigns('');
+
+    const Cal = new Calc(parseFloat(firstNumber.number), parseFloat(secondNumber.number));
+
+    if(arithmeticSigns === '+')
+      setFirstNumber({number: Cal.add(), use: false});
+
   }
 
   useEffect(()=>{
+  });
 
-  })
+  console.log(firstNumber, secondNumber, secondNumber.firstVis);
+  
+  // console.log(firstNumber, secondNumber);\
 
   return (
     <main className='calculator'>
       <section id='display' className='display'>
-        <p className='smallNumbers'>{displayValue.join("").replace(/^0+/,"")}</p>
-        <p className='selectNumber'>{arithmeticSigns === '' ? parseFloat(firstNumber.join("")) : parseFloat(secondNumber.join(""))}</p>
+        <p className='smallNumbers'>
+        {`${history.filter(el => !/^0+/.test(el)).join("")}/${secondNumber.firstVis ? firstNumber.number:''}/${arithmeticSigns}/${secondNumber.number}`}
+        </p>
+        <p className='selectNumber'>{!arithmeticSigns ? parseFloat(numbers.join("")) : firstNumber.number}</p>
       </section>
       <section className='buttons'>
         <button id='clear' onClick={clearHandler}>AC</button>
