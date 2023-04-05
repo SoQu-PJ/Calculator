@@ -15,50 +15,78 @@ function App() {
     setHistory(['0']);
     setNumbers(['0']);
     setFirstNumber({number: '', use: true});
-    setSecondNumber({number: '', firstVis: true});
+    setSecondNumber({number: '', use: false, firstVis: true});
     setArithmeticSigns('');
   }
   
   const setEquationHandler = e => {
     const textContent = e.target.textContent;
     
-    firstNumber.use ? setFirstNumber({number: firstNumber.number + textContent, use: true}) : 
-                      setSecondNumber(prev => ({...prev, number: secondNumber.number + textContent, use: true}));
+    if(!firstNumber.use){
+      setSecondNumber(prev => ({...prev, number: secondNumber.number + textContent, use: true}));
+      setNumbers(['0']);
+    }  
     
     setNumbers(prev => [...prev, textContent]);
 
   } 
   
   const setArithmeticSignsHandler = e => {
-      setFirstNumber(prev => ({...prev, use: false}));
-    
-      if(arithmeticSigns !== '' && secondNumber.use)
-      equalsHandler();
-      
-      // firstNumber.use = false;
+    // active equalsArithmeticSignsHandler function 
+    if(arithmeticSigns !== '' && secondNumber.number)
+      equalsArithmeticSignsHandler();
+
+    // select firstNumber
+    if(firstNumber.use){
+      setFirstNumber({number: parseFloat(numbers.join("")), use: false});
       setNumbers(['0']);
-      
-      setArithmeticSigns(e.target.dataset.sign);
+    }
+
+    setArithmeticSigns(e.target.dataset.sign);
   }
-  
-  const equalsHandler = () => {
+
+  const equalsArithmeticSignsHandler = () => {
+    // Set history when result 
     secondNumber.firstVis ? setHistory(prev => [...prev, firstNumber.number, arithmeticSigns, secondNumber.number]) :
-                            setHistory(prev => [...prev, arithmeticSigns, secondNumber.number]);
-    setFirstNumber({number: '', use: true});
-    setSecondNumber({number: '', use: false, firstVis: false});
+                            setHistory(prev => [...prev, arithmeticSigns, secondNumber.number])
+
+    setFirstNumber({number: '', use: false});
+    setSecondNumber({number: '', use: true, firstVis: false});
     setArithmeticSigns('');
 
     const Cal = new Calc(parseFloat(firstNumber.number), parseFloat(secondNumber.number));
 
-    if(arithmeticSigns === '+')
-      setFirstNumber({number: Cal.add(), use: false});
+    let result;
 
+    if(arithmeticSigns === '+')
+      result = Cal.add();
+    
+    // assign result to firstNumber
+    setFirstNumber({number: result, use: false});
+    setNumbers([result]);
+  }
+  
+  const equalsHandler = () => {
+    setHistory(prev => [...prev, firstNumber.number, arithmeticSigns, secondNumber.number, "="]);
+    setFirstNumber({number: '', use: false});
+    setSecondNumber({number: '', use: true, firstVis: false});
+    setArithmeticSigns('');
+
+    const Cal = new Calc(parseFloat(firstNumber.number), parseFloat(secondNumber.number));
+  
+    let result;
+
+    if(arithmeticSigns === '+')
+      result = Cal.add();
+
+    setFirstNumber({number: result, use: false});
+    setNumbers([result]);
   }
 
   useEffect(()=>{
   });
 
-  console.log(firstNumber, secondNumber, secondNumber.firstVis);
+  console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers);
   
   // console.log(firstNumber, secondNumber);\
 
