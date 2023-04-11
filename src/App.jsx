@@ -29,7 +29,6 @@ function App() {
     // set second number
     if(!firstNumber.use && textContent !== '.'){
       setSecondNumber(prev => ({...prev, number: secondNumber.number + textContent, use: true}));
-      setNumbers(['0']);
     }else if(textContent === '.' && !firstNumber.use && secondNumber.number === '')  
       setSecondNumber(prev => ({...prev, number: 0 + textContent, use: true}));
 
@@ -140,7 +139,7 @@ function App() {
       setOldResult(parseFloat(numbers.join("")));
   });
 
-  // console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns);
+  console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns);
   
   return (
     <main className='calculator'>
