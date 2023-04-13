@@ -70,7 +70,6 @@ body::-webkit-scrollbar-thumb {
     font-size: 3rem;
     border-radius: 1rem;
     padding: 0 1rem;
-    /* overflow-x: scroll; */
 }
 
 .display .smallNumbers {
@@ -148,29 +147,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* buttons end */
-
-/* scroll */
-
-.display::-webkit-scrollbar {
-    height: 0.8rem;
-    width: 0.5rem;
-}
-
-.display::-webkit-scrollbar-track {
-    border-radius: 10px;
-}
-
-.display::-webkit-scrollbar-thumb {
-    background: var(--bg-thumb-color);
-    border-radius: 10px;
-}
-
-.display::-webkit-scrollbar-thumb:hover {
-    background: var(--bg-thumb-hover-color);
-}
-
-/* scroll end */
-
 
 /* responsive web design */
 

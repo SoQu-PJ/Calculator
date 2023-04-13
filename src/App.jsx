@@ -26,6 +26,10 @@ function App() {
   const setEquationHandler = e => {
     const textContent = e.target.textContent;
 
+    // reset number when select three or more numbers
+    if(secondNumber.number === '')
+      setNumbers(['0']);
+
     // set second number
     if(!firstNumber.use && textContent !== '.'){
       setSecondNumber(prev => ({...prev, number: secondNumber.number + textContent, use: true}));
