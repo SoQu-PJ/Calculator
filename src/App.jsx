@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import Calc from './assets/Calculator';
+import Calc from './Components/Calculator';
+import decreaseFontSize from './Components/ChangeFontSize';
 import './App.css'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   const [equals, setEquals] = useState(false);
   const [oldResult, setOldResult] = useState(0);
 
+
   // restart calculator
   const clearHandler = () =>{
     setHistory(['0']);
@@ -20,14 +22,29 @@ function App() {
     setArithmeticSigns('');
     setEquals(false);
     setOldResult(0);
+
+    // set default fontSize
+    document.querySelector('.selectNumber').style.fontSize = ''
   }
+
+  const changeFontSize = async () => {
+    const parseNumbers =  parseFloat(numbers.join("")).toString().length;
+    const selectNumber = document.querySelector('.selectNumber'); 
+
+    parseNumbers > 8 ? decreaseFontSize('.selectNumber') : selectNumber.style.fontSize = '';
+
+    console.log(selectNumber.style.fontSize);
+  }
+
   
   // set number 
   const setEquationHandler = e => {
     const textContent = e.target.textContent;
 
+    changeFontSize();
+
     // reset number when select three or more numbers
-    if(secondNumber.number === '')
+    if(secondNumber.number === '' && secondNumber.use)
       setNumbers(['0']);
 
     // set second number
@@ -78,6 +95,7 @@ function App() {
 
 
   const equalsArithmeticSignsHandler = () => {
+    changeFontSize()
     // set and parse first and second number
     const Cal = new Calc(parseFloat(firstNumber.number === '' ? 0 : firstNumber.number), parseFloat(secondNumber.number === '' ? 0 : secondNumber.number));
 
@@ -109,6 +127,7 @@ function App() {
   
   // set equals
   const equalsHandler = () => {
+    changeFontSize()
     // use firstNumber or oldResult 
     const tmpFirstNumber = firstNumber.use ?  oldResult : parseFloat(firstNumber.number);
     // set and parse first and second number
@@ -141,9 +160,13 @@ function App() {
     // set oldResult
     if(firstNumber.use)
       setOldResult(parseFloat(numbers.join("")));
+
+    if(parseFloat(numbers.join("")).toString().length < 8)
+      document.querySelector('.selectNumber').style.fontSize = ''
+    
   });
 
-  console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns);
+  // console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns);
   
   return (
     <main className='calculator'>

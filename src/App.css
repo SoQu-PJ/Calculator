@@ -69,19 +69,28 @@ body::-webkit-scrollbar-thumb {
     margin: 0.5rem;
     font-size: 3rem;
     border-radius: 1rem;
-    padding: 0 1rem;
+    padding: 0 0.3rem;
+    overflow-y: hidden;
 }
 
 .display .smallNumbers {
     text-align: right;
     width: 100%;
-    font-size: 2rem;
+    height: 100%;
+    font-size: 1.7rem;
     color: var(--small-numbers-color);
+    overflow: hidden;
+    overflow-x: scroll;
 }
 
 .display .selectNumber {
+    height: 100%;
     width: 100%;
     text-align: right;
+    font-size: 2.5rem;
+    padding: 0.5rem 0.5rem;
+    overflow: hidden;
+    overflow-x: scroll;
 }
 
 .buttons {
@@ -148,6 +157,28 @@ body::-webkit-scrollbar-thumb {
 
 /* buttons end */
 
+/* scroll */
+
+::-webkit-scrollbar {
+    height: 0.8rem;
+    width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-thumb-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-thumb-hover-color);
+}
+
+/* scroll end */
+
 /* responsive web design */
 
 @media (min-width: 1025px) {
@@ -161,5 +192,9 @@ body::-webkit-scrollbar-thumb {
 
     .display .smallNumbers {
         font-size: 2.5rem;
+    }
+
+    .display .selectNumber {
+        font-size: 4.5rem;
     }
 }
