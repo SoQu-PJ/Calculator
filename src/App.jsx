@@ -31,7 +31,9 @@ function App() {
     const parseNumbers =  parseFloat(numbers.join("")).toString().length;
     const selectNumber = document.querySelector('.selectNumber'); 
 
-    parseNumbers > 8 ? decreaseFontSize('.selectNumber') : selectNumber.style.fontSize = '';
+    if(parseNumbers > 10 && parseNumbers < 18){
+      decreaseFontSize(4, '.selectNumber')
+    }
 
     console.log(selectNumber.style.fontSize);
   }
@@ -77,6 +79,7 @@ function App() {
     // active equalsArithmeticSignsHandler function 
     if(arithmeticSigns !== '' && secondNumber.number !== '')
       equalsArithmeticSignsHandler();
+    
 
     // select firstNumber
     if(firstNumber.use){
@@ -95,9 +98,9 @@ function App() {
 
 
   const equalsArithmeticSignsHandler = () => {
-    changeFontSize()
     // set and parse first and second number
-    const Cal = new Calc(parseFloat(firstNumber.number === '' ? 0 : firstNumber.number), parseFloat(secondNumber.number === '' ? 0 : secondNumber.number));
+    const Cal = new Calc(firstNumber.number === '' ? arithmeticSigns === '*' || arithmeticSigns === '/' ? 1 : 0 : firstNumber.number, 
+                parseFloat(secondNumber.number === '' ? arithmeticSigns === '*' || arithmeticSigns === '/' ? 1 : 0 : secondNumber.number));
 
     // Set history when result 
     secondNumber.firstVis ? setHistory(prev => [...prev, firstNumber.number, arithmeticSigns, secondNumber.number]) :
@@ -119,6 +122,10 @@ function App() {
       result = Cal.multiply();
     else if(arithmeticSigns === '/')
       result = Cal.divide();
+
+    // style fontSize
+    if(result.toString().length > 11)
+      decreaseFontSize(20, '.selectNumber');
     
     // assign result to firstNumber
     setFirstNumber({number: result, use: false});
@@ -127,11 +134,11 @@ function App() {
   
   // set equals
   const equalsHandler = () => {
-    changeFontSize()
     // use firstNumber or oldResult 
     const tmpFirstNumber = firstNumber.use ?  oldResult : parseFloat(firstNumber.number);
     // set and parse first and second number
-    const Cal = new Calc(tmpFirstNumber === '' ? 0 : tmpFirstNumber, parseFloat(secondNumber.number === '' ? 0 : secondNumber.number));
+    const Cal = new Calc(tmpFirstNumber === '' ? arithmeticSigns === '*' || arithmeticSigns === '/' ? 1 : 0 : tmpFirstNumber, 
+                parseFloat(secondNumber.number === '' ? arithmeticSigns === '*' || arithmeticSigns === '/' ? 1 : 0 : secondNumber.number));
 
     setEquals(true);
     setFirstNumber({number: oldResult, use: true});
@@ -152,21 +159,27 @@ function App() {
     else
       result = oldResult;
     
+    // style FontSize
+    if(result.toString().length > 11)
+      decreaseFontSize(20, '.selectNumber');
+
     // set result
     setNumbers([result]);
   }
   
   useEffect(()=>{
     // set oldResult
-    if(firstNumber.use)
+    if(firstNumber.use || secondNumber.use)
       setOldResult(parseFloat(numbers.join("")));
 
-    if(parseFloat(numbers.join("")).toString().length < 8)
+    // style fontSize
+    const parseNumbers = parseFloat(numbers.join("")).toString().length;
+    if(parseNumbers < 11)
       document.querySelector('.selectNumber').style.fontSize = ''
-    
+
   });
 
-  // console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns);
+  console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult);
   
   return (
     <main className='calculator'>

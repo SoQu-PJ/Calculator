@@ -8,7 +8,7 @@ function changeFontSize(delta, tag) {
     if (tags[i].style.fontSize) {
       s = parseInt(tags[i].style.fontSize.replace("px", ""));
     } else {
-      s = 48;
+      s = 44;
     } if (s != max) {
       s += delta;
     }
@@ -20,8 +20,8 @@ function increaseFontSize(tag) {
   changeFontSize(1, tag);
 }
 
-function decreaseFontSize(tag) {
-  changeFontSize(-4, tag);
+function decreaseFontSize(howMuch, tag) {
+  changeFontSize(-howMuch, tag);
 }
 
 export default decreaseFontSize;

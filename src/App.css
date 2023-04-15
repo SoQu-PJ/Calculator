@@ -60,35 +60,35 @@ body::-webkit-scrollbar-thumb {
 }
 
 .display {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    flex-flow: column;
+    display: grid;
+    grid-template-rows: 45% 1fr;
+
     grid-column: 1 / span 1;
     background-color: white;
     margin: 0.5rem;
     font-size: 3rem;
     border-radius: 1rem;
     padding: 0 0.3rem;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .display .smallNumbers {
     text-align: right;
     width: 100%;
-    height: 100%;
     font-size: 1.7rem;
     color: var(--small-numbers-color);
     overflow: hidden;
     overflow-x: scroll;
+    white-space: nowrap;
 }
 
 .display .selectNumber {
-    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     width: 100%;
     text-align: right;
     font-size: 2.5rem;
-    padding: 0.5rem 0.5rem;
     overflow: hidden;
     overflow-x: scroll;
 }
@@ -160,8 +160,7 @@ body::-webkit-scrollbar-thumb {
 /* scroll */
 
 ::-webkit-scrollbar {
-    height: 0.8rem;
-    width: 0.5rem;
+    height: 0.4rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -180,21 +179,21 @@ body::-webkit-scrollbar-thumb {
 /* scroll end */
 
 /* responsive web design */
-
-@media (min-width: 1025px) {
+@media (min-width: 767px) {
     .calculator {
-        width: 70vh;
+        width: 55vh;
     }
 
     .display {
+        grid-template-rows: 35% 1fr;
         font-size: 4.5rem;
     }
 
     .display .smallNumbers {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .display .selectNumber {
-        font-size: 4.5rem;
+        font-size: 3rem;
     }
 }
