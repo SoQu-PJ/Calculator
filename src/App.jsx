@@ -35,7 +35,7 @@ function App() {
       decreaseFontSize(4, '.selectNumber')
     }
 
-    console.log(selectNumber.style.fontSize);
+    // console.log(selectNumber.style.fontSize);
   }
 
   
@@ -43,16 +43,21 @@ function App() {
   const setEquationHandler = e => {
     const textContent = e.target.textContent;
 
+    // style fontSize
     changeFontSize();
 
     // reset number when select three or more numbers
     if(secondNumber.number === '' && secondNumber.use)
       setNumbers(['0']);
 
-    // set second number
-    if(!firstNumber.use && textContent !== '.'){
+    // set secondNumber else set secondNumber with dot
+    if(!firstNumber.use && textContent !== '.')
       setSecondNumber(prev => ({...prev, number: secondNumber.number + textContent, use: true}));
-    }else if(textContent === '.' && !firstNumber.use && secondNumber.number === '')  
+    else if(!numbers.find(name => name === '.') && !firstNumber.use && textContent === '.')
+      setSecondNumber(prev => ({...prev, number: secondNumber.number + textContent, use: true}));
+    
+    // if set secondNumber with dot and secondNumber === ''
+    if(textContent === '.' && !firstNumber.use && secondNumber.number === '')  
       setSecondNumber(prev => ({...prev, number: 0 + textContent, use: true}));
 
 
@@ -98,13 +103,14 @@ function App() {
 
 
   const equalsArithmeticSignsHandler = () => {
+    // Set history when result 
+    secondNumber.firstVis ? setHistory(prev => [...prev, firstNumber.number, arithmeticSigns, secondNumber.number]) :
+                            setHistory(prev => [...prev, arithmeticSigns, secondNumber.number]);
+
     // set and parse first and second number
     const Cal = new Calc(firstNumber.number === '' ? arithmeticSigns === '*' || arithmeticSigns === '/' ? 1 : 0 : firstNumber.number, 
                 parseFloat(secondNumber.number === '' ? arithmeticSigns === '*' || arithmeticSigns === '/' ? 1 : 0 : secondNumber.number));
 
-    // Set history when result 
-    secondNumber.firstVis ? setHistory(prev => [...prev, firstNumber.number, arithmeticSigns, secondNumber.number]) :
-                            setHistory(prev => [...prev, arithmeticSigns, secondNumber.number]);
 
     // clear second number
     setSecondNumber({number: '', use: true, firstVis: false});
@@ -134,6 +140,9 @@ function App() {
   
   // set equals
   const equalsHandler = () => {
+    // reset fontSize
+    document.querySelector('.selectNumber').style.fontSize = ''
+
     // use firstNumber or oldResult 
     const tmpFirstNumber = firstNumber.use ?  oldResult : parseFloat(firstNumber.number);
     // set and parse first and second number
@@ -179,7 +188,7 @@ function App() {
 
   });
 
-  console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult);
+  // console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult);
   
   return (
     <main className='calculator'>
