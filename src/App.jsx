@@ -86,7 +86,7 @@ function App() {
 
     // select firstNumber
     if(firstNumber.use){
-      setFirstNumber({number: parseFloat(numbers.join("")), use: false});
+      setFirstNumber({number: parseFloat(numbers.join('') !== 'Error' ? numbers.join(''): 0), use: false});
       setNumbers(['0']);
     }
 
@@ -124,15 +124,20 @@ function App() {
       result = Cal.subtract();
     else if(arithmeticSigns === '*')
       result = Cal.multiply();
-    else if(arithmeticSigns === '/')
+    else if(arithmeticSigns === '/'){
       result = Cal.divide();
+
+      // if 0/0
+      if(result.toString() === 'NaN')
+      result = 'Error';
+    }
 
     // style fontSize
     if(result.toString().length > 11)
       decreaseFontSize(20, '.selectNumber');
     
     // assign result to firstNumber
-    setFirstNumber({number: result, use: false});
+    setFirstNumber({number: result.toString() !== 'NaN' ? result : 0, use: false});
     setNumbers([result]);
   }
   
@@ -150,8 +155,8 @@ function App() {
     setEquals(true);
     setFirstNumber({number: oldResult, use: true});
     
-    
     secondNumber.number === '' && setArithmeticSigns('');
+    
     let result;
     
     // if performs arithmetic operations
@@ -161,8 +166,13 @@ function App() {
       result = Cal.subtract();
     else if(arithmeticSigns === '*')
       result = Cal.multiply();
-    else if(arithmeticSigns === '/')
+    else if(arithmeticSigns === '/'){
       result = Cal.divide();
+
+      // if 0/0
+      if(result.toString() === 'NaN')
+      result = 'Error';
+    }
     else
       result = oldResult;
     
@@ -172,26 +182,28 @@ function App() {
 
     // set result
     setNumbers([result]);
+    console.log(result.toString().length );
   }
   
   useEffect(()=>{
     // set oldResult
     if(firstNumber.use || secondNumber.use)
-      setOldResult(parseFloat(numbers.join("")));
+      setOldResult(parseFloat(numbers.join('') !== 'Error' ? numbers.join(''): 0));
 
     // style fontSize
     const parseNumbers = parseFloat(numbers.join("")).toString().length;
     if(parseNumbers < 11)
       document.querySelector('.selectNumber').style.fontSize = ''
+
   });
 
-  console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult, numbers.join("").replace(/0+/, '0'));
+  // console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult, numbers.join("").replace(/0+/, '0'));
   
   return (
     <main className='calculator'>
       <section id='display' className='display'>
         <p className='smallNumbers'>
-        {`${history.join("").replace(/^0/, '')}${secondNumber.firstVis ? firstNumber.number:''}${arithmeticSigns}${secondNumber.number}${equals ? '=' : ''}`}
+        {`${history.join('').replace(/0+/, '0').replace(/^0/, '')}${secondNumber.firstVis ? firstNumber.number:''}${arithmeticSigns}${secondNumber.number.replace(/0+/, '0').replace(/\b0(?=\d)/, '')}${equals ? '=' : ''}`}
         </p>
         <p className='selectNumber'>
         {numbers.join('').replace(/0+/, '0').replace(/\b0(?=\d)/, '')}
