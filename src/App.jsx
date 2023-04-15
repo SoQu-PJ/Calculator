@@ -42,14 +42,14 @@ function App() {
   // set number 
   const setEquationHandler = e => {
     const textContent = e.target.textContent;
-
+    
     // style fontSize
     changeFontSize();
-
+    
     // reset number when select three or more numbers
     if(secondNumber.number === '' && secondNumber.use)
       setNumbers(['0']);
-
+    
     // set secondNumber else set secondNumber with dot
     if(!firstNumber.use && textContent !== '.')
       setSecondNumber(prev => ({...prev, number: secondNumber.number + textContent, use: true}));
@@ -59,8 +59,7 @@ function App() {
     // if set secondNumber with dot and secondNumber === ''
     if(textContent === '.' && !firstNumber.use && secondNumber.number === '')  
       setSecondNumber(prev => ({...prev, number: 0 + textContent, use: true}));
-
-
+    
     // clear if select number after equals
     if(equals)
       clearHandler();
@@ -70,7 +69,6 @@ function App() {
       setNumbers(prev => [...prev, textContent]) 
     else if(textContent !== '.')
       setNumbers(prev => [...prev, textContent])
-
   } 
   
   // set arithmeticSignsHandler
@@ -185,18 +183,19 @@ function App() {
     const parseNumbers = parseFloat(numbers.join("")).toString().length;
     if(parseNumbers < 11)
       document.querySelector('.selectNumber').style.fontSize = ''
-
   });
 
-  // console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult);
+  console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult, numbers.join("").replace(/0+/, '0'));
   
   return (
     <main className='calculator'>
       <section id='display' className='display'>
         <p className='smallNumbers'>
-        {`${history.filter(el => !/^0+/.test(el)).join("")}${secondNumber.firstVis ? firstNumber.number:''}${arithmeticSigns}${secondNumber.number}${equals ? '=' : ''}`}
+        {`${history.join("").replace(/^0/, '')}${secondNumber.firstVis ? firstNumber.number:''}${arithmeticSigns}${secondNumber.number}${equals ? '=' : ''}`}
         </p>
-        <p className='selectNumber'>{parseFloat(numbers.join(""))}</p>
+        <p className='selectNumber'>
+        {numbers.join('').replace(/0+/, '0').replace(/\b0(?=\d)/, '')}
+        </p>
       </section>
       <section className='buttons'>
         <button id='clear' onClick={clearHandler}>AC</button>
