@@ -51,9 +51,9 @@ body::-webkit-scrollbar-thumb {
 .calculator {
     font-family: 'Russo One', sans-serif;
     display: grid;
-    grid-template: 21% 1fr / 1fr;
+    grid-template: 19% 1fr / 1fr;
     background: var(--bg-cal-color);
-    width: 90vw;
+    width: 92vw;
     height: 85vh;
     border-radius: 1rem;
     padding: 0.5rem;
@@ -61,7 +61,7 @@ body::-webkit-scrollbar-thumb {
 
 .display {
     display: grid;
-    grid-template-rows: 45% 1fr;
+    grid-template-rows: 35% 1fr;
 
     grid-column: 1 / span 1;
     background-color: white;
@@ -90,7 +90,6 @@ body::-webkit-scrollbar-thumb {
     text-align: right;
     font-size: 2.5rem;
     overflow: hidden;
-    overflow-x: scroll;
 }
 
 .buttons {
@@ -102,7 +101,7 @@ body::-webkit-scrollbar-thumb {
 .buttons button {
     font-family: 'Russo One', sans-serif;
     border: none;
-    margin: 0.5rem;
+    margin: 0.3rem;
     border-radius: 2rem;
     font-size: 2rem;
     transition: 0.3s;
