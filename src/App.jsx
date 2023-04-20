@@ -182,12 +182,11 @@ function App() {
 
     // set result
     setNumbers([result]);
-    console.log(result.toString().length );
   }
   
   useEffect(()=>{
     // set oldResult
-    if(firstNumber.use || secondNumber.use)
+    if(firstNumber.use)
       setOldResult(parseFloat(numbers.join('') !== 'Error' ? numbers.join(''): 0));
 
     // style fontSize
@@ -197,7 +196,7 @@ function App() {
 
   });
 
-  // console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult, numbers.join("").replace(/0+/, '0'));
+  console.log(firstNumber, secondNumber, secondNumber.firstVis, numbers, equals, arithmeticSigns, oldResult);
   
   return (
     <main className='calculator'>
@@ -206,7 +205,7 @@ function App() {
         {`${history.join('').replace(/0+/, '0').replace(/^0/, '')}${secondNumber.firstVis ? firstNumber.number:''}${arithmeticSigns}${secondNumber.number.replace(/0+/, '0').replace(/\b0(?=\d)/, '')}${equals ? '=' : ''}`}
         </p>
         <p className='selectNumber'>
-        {parseFloat(numbers.join("")).toString().length < 11 ? parseFloat(numbers.join("")) : numbers.join('').replace(/0+/, '0').replace(/\b0(?=\d)/, '')}
+        {parseFloat(numbers.join("")).toString().length < 11 && !numbers.join("") === 'Error' ? parseFloat(numbers.join("")) : numbers.join('').replace(/0+/, '0').replace(/\b0(?=\d)/, '')}
         </p>
       </section>
       <section className='buttons'>
