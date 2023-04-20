@@ -22,10 +22,6 @@
     padding: 0;
 }
 
-body::-webkit-scrollbar {
-    width: 11px;
-}
-
 body {
     display: flex;
     justify-content: center;
@@ -33,35 +29,22 @@ body {
     height: 100vh;
     background-color: #FF3CAC;
     background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-
-    scrollbar-width: thin;
-    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-
-body::-webkit-scrollbar-track {
-    background: var(--scrollbarBG);
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: var(--thumbBG);
-    border-radius: 6px;
-    border: 3px solid var(--scrollbarBG);
 }
 
 .calculator {
     font-family: 'Russo One', sans-serif;
     display: grid;
-    grid-template: 19% 1fr / 1fr;
+    grid-template: 20% 80% / 1fr;
     background: var(--bg-cal-color);
     width: 92vw;
-    height: 85vh;
+    height: 75vh;
     border-radius: 1rem;
     padding: 0.5rem;
 }
 
 .display {
     display: grid;
-    grid-template-rows: 35% 1fr;
+    grid-template-rows: 50% 1fr;
 
     grid-column: 1 / span 1;
     background-color: white;
@@ -75,7 +58,7 @@ body::-webkit-scrollbar-thumb {
 .display .smallNumbers {
     text-align: right;
     width: 100%;
-    font-size: 1.7rem;
+    font-size: 0.8rem;
     color: var(--small-numbers-color);
     overflow: hidden;
     overflow-x: scroll;
@@ -88,7 +71,7 @@ body::-webkit-scrollbar-thumb {
     justify-content: flex-end;
     width: 100%;
     text-align: right;
-    font-size: 2.5rem;
+    font-size: 1.3rem;
     overflow: hidden;
 }
 
@@ -108,7 +91,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .buttons button:hover {
-    font-size: 4rem;
+    font-size: 3rem;
 }
 
 .buttons button:active {
@@ -178,7 +161,11 @@ body::-webkit-scrollbar-thumb {
 /* scroll end */
 
 /* responsive web design */
-@media (min-width: 767px) {
+@media (min-width: 769px) {
+    body {
+        height: 100vh;
+    }
+
     .calculator {
         width: 55vh;
     }
@@ -194,5 +181,19 @@ body::-webkit-scrollbar-thumb {
 
     .display .selectNumber {
         font-size: 3rem;
+    }
+}
+
+@media (min-height: 600px) {
+    .display {
+        grid-template-rows: 35% 1fr;
+    }
+
+    .display .smallNumbers {
+        font-size: 1.3rem;
+    }
+
+    .display .selectNumber {
+        font-size: 2.5rem;
     }
 }

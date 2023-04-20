@@ -206,7 +206,7 @@ function App() {
         {`${history.join('').replace(/0+/, '0').replace(/^0/, '')}${secondNumber.firstVis ? firstNumber.number:''}${arithmeticSigns}${secondNumber.number.replace(/0+/, '0').replace(/\b0(?=\d)/, '')}${equals ? '=' : ''}`}
         </p>
         <p className='selectNumber'>
-        {numbers.join('').replace(/0+/, '0').replace(/\b0(?=\d)/, '')}
+        {parseFloat(numbers.join("")).toString().length < 11 ? parseFloat(numbers.join("")) : numbers.join('').replace(/0+/, '0').replace(/\b0(?=\d)/, '')}
         </p>
       </section>
       <section className='buttons'>
